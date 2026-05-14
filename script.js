@@ -127,7 +127,12 @@ function calculateFare() {
 }
 
 function initializeRouteMap() {
-    if (!window.L || routeMap) {
+    if (routeMap) {
+        return;
+    }
+
+    if (!window.L) {
+        document.getElementById("mapStatus").innerText = "Map could not load. Please check your internet connection and refresh.";
         return;
     }
 

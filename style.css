@@ -59,7 +59,7 @@ button:hover { background: #2ecc71; transform: translateY(-3px); }
 
 .travel-card { grid-column: span 2; }
 
-.map-card { grid-column: span 2; }
+.map-card { grid-column: 1 / -1; }
 
 label {
     display: block;
@@ -124,7 +124,7 @@ label {
     background: #e7efe9;
     border: 1px solid #d8efe1;
     border-radius: 8px;
-    height: 420px;
+    height: 460px;
     overflow: hidden;
     width: 100%;
 }
@@ -185,5 +185,5 @@ label {
     .map-card { grid-column: span 1; }
     .field-grid { grid-template-columns: 1fr; gap: 0; }
     .route-chip { align-items: flex-start; flex-direction: column; }
-    #routeMap { height: 320px; }
+    #routeMap { height: 360px; }
 }
