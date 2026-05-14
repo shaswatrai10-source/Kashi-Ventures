@@ -30,16 +30,15 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 
 .dashboard-area { padding: 50px 5%; }
 
-.container-flex { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+.container-flex { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1180px; margin: 0 auto; }
 
 .calc-card {
     background: white;
-    padding: 30px;
-    border-radius: 20px;
+    padding: 26px;
+    border-radius: 8px;
     width: 100%;
-    max-width: 380px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    text-align: center;
+    text-align: left;
     border-top: 5px solid #27ae60;
 }
 
@@ -53,4 +52,74 @@ button:hover { background: #2ecc71; transform: translateY(-3px); }
 
 #resultText, #farmResult { margin-top: 15px; color: #27ae60; font-weight: 600; }
 
+.travel-card { grid-column: span 2; }
+
+label {
+    display: block;
+    color: #53606b;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.fare-output {
+    background: #f1f8f4;
+    border: 1px solid #d8efe1;
+    border-radius: 8px;
+    margin-top: 14px;
+    padding: 14px;
+}
+
+#routeDetails {
+    color: #5f6d66;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin-top: 8px;
+}
+
+.route-list {
+    display: grid;
+    gap: 10px;
+}
+
+.route-chip {
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #dce7e1;
+    color: #2c3e50;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0;
+    text-align: left;
+}
+
+.route-chip:hover {
+    background: #f1f8f4;
+    color: #1f7a43;
+}
+
+.route-chip span {
+    font-weight: 600;
+}
+
+.route-chip strong {
+    color: #27ae60;
+    white-space: nowrap;
+}
+
 .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; padding: 15px; border-radius: 50px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 1001; }
+
+@media (max-width: 760px) {
+    .hero { height: 58vh; padding: 0 18px; }
+    .hero h1 { font-size: 2.1rem; }
+    .dashboard-area { padding: 32px 16px; }
+    .travel-card { grid-column: span 1; }
+    .field-grid { grid-template-columns: 1fr; gap: 0; }
+    .route-chip { align-items: flex-start; flex-direction: column; }
+}
