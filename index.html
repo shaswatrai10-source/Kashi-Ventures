@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kashi Ventures | Smart Farm & Travels</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
@@ -63,6 +65,16 @@
                 <div id="popularRoutes" class="route-list"></div>
             </div>
 
+            <div class="calc-card map-card">
+                <div class="map-heading">
+                    <div>
+                        <h2>Route <span>Map</span></h2>
+                        <p id="mapStatus">Loading India route map...</p>
+                    </div>
+                </div>
+                <div id="routeMap"></div>
+            </div>
+
             <div class="calc-card">
                 <h2>Ask <span>Question</span></h2>
                 <label>
@@ -92,6 +104,8 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="35">
     </a>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="script.js"></script>
 </body>
 </html>

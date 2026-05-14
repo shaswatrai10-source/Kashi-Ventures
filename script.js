@@ -39,6 +39,10 @@ const sampleRoutes = [
     ["Mumbai", "Goa"]
 ];
 
+let routeMap;
+let routeLayerGroup;
+let activeRouteRequest = 0;
+
 function formatMoney(amount) {
     return "Rs " + Math.round(amount).toLocaleString("en-IN");
 }
@@ -119,6 +123,100 @@ function calculateFare() {
         `${vehicleRates[vehicleKey].label}, ${tripLabel}, billed ${estimate.billedDistance} km with toll/parking and driver allowance included.`;
 
     updateRideConfirmationLink(from, to, vehicleKey, tripType, estimate);
+    drawRouteOnMap(from, to);
+}
+
+function initializeRouteMap() {
+    if (!window.L || routeMap) {
+        return;
+    }
+
+    routeMap = L.map("routeMap", {
+        scrollWheelZoom: false,
+        zoomControl: true
+    }).setView([22.9734, 78.6569], 5);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18,
+        attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(routeMap);
+
+    routeLayerGroup = L.layerGroup().addTo(routeMap);
+}
+
+async function drawRouteOnMap(from, to) {
+    initializeRouteMap();
+
+    if (!routeMap || !routeLayerGroup) {
+        return;
+    }
+
+    const requestId = ++activeRouteRequest;
+    const mapStatus = document.getElementById("mapStatus");
+    mapStatus.innerText = `Finding road route from ${from.name} to ${to.name}...`;
+
+    try {
+        const routeCoordinates = await fetchRoadRoute(from, to);
+        if (requestId !== activeRouteRequest) {
+            return;
+        }
+        renderRoute(from, to, routeCoordinates, true);
+        mapStatus.innerText = `Showing real road route: ${from.name} to ${to.name}`;
+    } catch (error) {
+        if (requestId !== activeRouteRequest) {
+            return;
+        }
+        renderRoute(from, to, [[from.lat, from.lng], [to.lat, to.lng]], false);
+        mapStatus.innerText = `Road route unavailable, showing direct route: ${from.name} to ${to.name}`;
+    }
+}
+
+async function fetchRoadRoute(from, to) {
+    const coordinates = `${from.lng},${from.lat};${to.lng},${to.lat}`;
+    const url = `https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=full&geometries=geojson`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error("Route request failed");
+    }
+
+    const data = await response.json();
+    const geometry = data.routes?.[0]?.geometry?.coordinates;
+
+    if (!geometry || geometry.length < 2) {
+        throw new Error("Route geometry unavailable");
+    }
+
+    return geometry.map(([lng, lat]) => [lat, lng]);
+}
+
+function renderRoute(from, to, routeCoordinates, isRoadRoute) {
+    routeLayerGroup.clearLayers();
+
+    const startMarker = L.marker([from.lat, from.lng]).bindPopup(`<strong>${from.name}</strong><br>Pickup city`);
+    const endMarker = L.marker([to.lat, to.lng]).bindPopup(`<strong>${to.name}</strong><br>Destination city`);
+    const routeLine = L.polyline(routeCoordinates, {
+        color: isRoadRoute ? "#27ae60" : "#f39c12",
+        dashArray: isRoadRoute ? null : "8 10",
+        lineCap: "round",
+        lineJoin: "round",
+        opacity: 0.9,
+        weight: 6
+    });
+
+    routeLayerGroup.addLayer(routeLine);
+    routeLayerGroup.addLayer(startMarker);
+    routeLayerGroup.addLayer(endMarker);
+    routeMap.fitBounds(routeLine.getBounds().pad(0.2), {
+        animate: true,
+        maxZoom: 9
+    });
+}
+
+function registerRouteControls() {
+    ["fromCity", "toCity", "carType", "tripType"].forEach((id) => {
+        document.getElementById(id).addEventListener("change", calculateFare);
+    });
 }
 
 function updateRideConfirmationLink(from, to, vehicleKey, tripType, estimate) {
@@ -191,6 +289,8 @@ function estimateFarmProfit() {
 fillCitySelects();
 renderPopularRoutes();
 initializeWhatsAppLinks();
+initializeRouteMap();
+registerRouteControls();
 calculateFare();
 
 console.log("Kashi Ventures smart route estimator ready.");
