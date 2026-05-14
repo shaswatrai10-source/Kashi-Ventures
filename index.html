@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kashi Ventures | Smart Farm & Travels</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">KASHI <span>VENTURES</span></div>
+            <a href="https://wa.me/91XXXXXXXXXX" class="btn-nav">WhatsApp Us</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Premium Travel & <span>Smart Farming</span></h1>
+        <p>Ghazipur se Varanasi tak ka sabse advanced integrated system.</p>
+    </section>
+
+    <section class="dashboard-area">
+        <div class="container-flex">
+            <div class="calc-card">
+                <h2>🚗 Travel <span>Fare</span></h2>
+                <select id="destination">
+                    <option value="0">Select Destination</option>
+                    <option value="2500">Varanasi to Ayodhya</option>
+                    <option value="1500">Varanasi to Ghazipur</option>
+                    <option value="1200">Ghat to Sarnath Tour</option>
+                </select>
+                <select id="carType">
+                    <option value="1">4-Seater Sedan</option>
+                    <option value="1.5">7-Seater SUV</option>
+                </select>
+                <button onclick="calculateFare()">Get Estimate</button>
+                <h3 id="resultText">Estimated Fare: ₹0</h3>
+            </div>
+
+            <div class="calc-card">
+                <h2>🌿 Farm <span>Profit</span></h2>
+                <select id="cropType">
+                    <option value="0">Select Crop</option>
+                    <option value="500000">Seedless Cucumber</option>
+                    <option value="800000">Bell Pepper (Red/Yellow)</option>
+                    <option value="300000">Cherry Tomatoes</option>
+                </select>
+                <input type="number" id="areaSize" placeholder="Enter Bigha (e.g. 2)">
+                <button onclick="estimateFarmProfit()">Check Potential</button>
+                <h3 id="farmResult">Potential Profit: ₹0</h3>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="35">
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
