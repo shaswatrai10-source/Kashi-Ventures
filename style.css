@@ -45,7 +45,12 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 .calc-card h2 { margin-bottom: 15px; font-size: 1.5rem; color: #2c3e50; }
 .calc-card h2 span { color: #27ae60; }
 
-input, select, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; outline: none; }
+input, select, textarea, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; outline: none; }
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
 
 button { background: #27ae60; color: white; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
 button:hover { background: #2ecc71; transform: translateY(-3px); }
@@ -73,6 +78,30 @@ label {
     border-radius: 8px;
     margin-top: 14px;
     padding: 14px;
+}
+
+.whatsapp-btn {
+    align-items: center;
+    background: #25d366;
+    border-radius: 8px;
+    color: white;
+    display: inline-flex;
+    font-weight: 600;
+    justify-content: center;
+    margin-top: 14px;
+    padding: 12px 14px;
+    text-decoration: none;
+    width: 100%;
+}
+
+.whatsapp-btn:hover {
+    background: #1fb457;
+}
+
+.helper-text {
+    color: #6a756f;
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 
 #routeDetails {

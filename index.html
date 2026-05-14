@@ -12,7 +12,7 @@
     <header>
         <nav>
             <div class="logo">KASHI <span>VENTURES</span></div>
-            <a href="https://wa.me/91XXXXXXXXXX" class="btn-nav">WhatsApp Us</a>
+            <a id="navWhatsApp" href="#" class="btn-nav" target="_blank" rel="noopener">WhatsApp Us</a>
         </nav>
     </header>
 
@@ -54,12 +54,23 @@
                 <div class="fare-output">
                     <h3 id="resultText">Estimated Fare: Rs 0</h3>
                     <p id="routeDetails">Choose two cities to calculate distance and price.</p>
+                    <a id="confirmRideBtn" href="#" class="whatsapp-btn" target="_blank" rel="noopener">Confirm Ride on WhatsApp</a>
                 </div>
             </div>
 
             <div class="calc-card routes-card">
                 <h2>Popular <span>Routes</span></h2>
                 <div id="popularRoutes" class="route-list"></div>
+            </div>
+
+            <div class="calc-card">
+                <h2>Ask <span>Question</span></h2>
+                <label>
+                    Your Query
+                    <textarea id="customerQuery" rows="5" placeholder="Type your ride question, pickup time, pickup location, or special request"></textarea>
+                </label>
+                <button onclick="sendQueryToWhatsApp()">Send Query on WhatsApp</button>
+                <p class="helper-text">Customers can ask anything or confirm booking directly on your WhatsApp Business.</p>
             </div>
 
             <div class="calc-card">
@@ -77,7 +88,7 @@
         </div>
     </section>
 
-    <a href="https://wa.me/91XXXXXXXXXX" class="whatsapp-float" target="_blank">
+    <a id="floatingWhatsApp" href="#" class="whatsapp-float" target="_blank" rel="noopener">
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="35">
     </a>
 

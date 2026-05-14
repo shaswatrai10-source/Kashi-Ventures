@@ -22,6 +22,8 @@ const popularCities = [
     { name: "Chennai", state: "Tamil Nadu", lat: 13.0827, lng: 80.2707 }
 ];
 
+const WHATSAPP_BUSINESS_NUMBER = "91XXXXXXXXXX";
+
 const vehicleRates = {
     sedan: { label: "Sedan", perKm: 14, minimum: 1200, driver: 500 },
     suv: { label: "SUV", perKm: 19, minimum: 1800, driver: 700 },
@@ -39,6 +41,10 @@ const sampleRoutes = [
 
 function formatMoney(amount) {
     return "Rs " + Math.round(amount).toLocaleString("en-IN");
+}
+
+function buildWhatsAppLink(message) {
+    return `https://wa.me/${WHATSAPP_BUSINESS_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
 function getCity(name) {
@@ -111,6 +117,39 @@ function calculateFare() {
     document.getElementById("routeDetails").innerText =
         `${from.name} to ${to.name} is approx ${estimate.distance} km by road. ` +
         `${vehicleRates[vehicleKey].label}, ${tripLabel}, billed ${estimate.billedDistance} km with toll/parking and driver allowance included.`;
+
+    updateRideConfirmationLink(from, to, vehicleKey, tripType, estimate);
+}
+
+function updateRideConfirmationLink(from, to, vehicleKey, tripType, estimate) {
+    const tripLabel = tripType === "roundTrip" ? "Round Trip" : "One Way";
+    const message = [
+        "Hello Kashi Ventures, I want to confirm a ride.",
+        `Route: ${from.name} to ${to.name}`,
+        `Vehicle: ${vehicleRates[vehicleKey].label}`,
+        `Trip Type: ${tripLabel}`,
+        `Approx Distance: ${estimate.distance} km`,
+        `Estimated Fare: ${formatMoney(estimate.total)}`,
+        "Please confirm availability and pickup details."
+    ].join("\n");
+
+    document.getElementById("confirmRideBtn").href = buildWhatsAppLink(message);
+}
+
+function sendQueryToWhatsApp() {
+    const query = document.getElementById("customerQuery").value.trim();
+    const message = query
+        ? `Hello Kashi Ventures, I have a query:\n${query}`
+        : "Hello Kashi Ventures, I have a query about booking a ride.";
+
+    window.open(buildWhatsAppLink(message), "_blank", "noopener");
+}
+
+function initializeWhatsAppLinks() {
+    const defaultMessage = "Hello Kashi Ventures, I want to know more about travel booking.";
+    const defaultLink = buildWhatsAppLink(defaultMessage);
+    document.getElementById("navWhatsApp").href = defaultLink;
+    document.getElementById("floatingWhatsApp").href = defaultLink;
 }
 
 function renderPopularRoutes() {
@@ -151,6 +190,7 @@ function estimateFarmProfit() {
 
 fillCitySelects();
 renderPopularRoutes();
+initializeWhatsAppLinks();
 calculateFare();
 
 console.log("Kashi Ventures smart route estimator ready.");
